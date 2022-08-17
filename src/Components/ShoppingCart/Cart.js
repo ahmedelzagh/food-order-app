@@ -7,7 +7,10 @@ import classes from "./Cart.module.css";
 import Modal from "../UI/Modal";
 
 const Cart = (props) => {
-  const CartItemsList = [{ id: "c4", name: "Cuchi", amount: 3, price: 15.87 }].map((item) => <CartItem key={item.id} item={item} />);
+  const CartItemsList = props.cartItems.map((item) => <CartItem key={item.id} item={item} />);
+
+  // Multiply the price of each cart item with its amount, then reduce(Add) the array of numbers returned from the map method.
+  let totalAmount = props.cartItems.map((item) => item.price * item.amount).reduce((total, sum) => total + sum, 0);
 
   return (
     <Modal onClick={props.onHide}>
@@ -15,7 +18,7 @@ const Cart = (props) => {
         {CartItemsList}
         <div className={classes.total}>
           <span>Total Amount</span>
-          <span>19.75</span>
+          <span>${totalAmount.toFixed(2)}</span>
         </div>
         <div className={classes.actions}>
           <Button onClick={props.onHide}>Close</Button>
