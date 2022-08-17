@@ -12,8 +12,11 @@
   color: #363636;
 }
 
+.container{
+  width: 100%;
+}
+
 .summary {
-  width: 10rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -30,11 +33,18 @@
   padding: 0.25rem 0.75rem;
   border-radius: 6px;
   color: #363636;
+  margin: 0 5px;
 }
 
 .actions {
   display: flex;
   flex-direction: column;
+}
+
+.changeAmountButton {
+  /* fit content small size */
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
 }
 
 @media (min-width: 768px) {
