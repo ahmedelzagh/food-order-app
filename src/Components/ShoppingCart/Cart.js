@@ -1,19 +1,20 @@
-import React from "react";
-import CartItem from "./CartItem";
-
-import Button from "../UI/Button";
+import React, { useContext } from "react";
 
 import classes from "./Cart.module.css";
+
+import CartItem from "./CartItem";
+import Button from "../UI/Button";
 import Modal from "../UI/Modal";
+import CartContext from "../../store/cart-context";
 
 const Cart = (props) => {
-  const CartItemsList = props.cartItems.map((item) => <CartItem key={item.id} item={item} dispatchCart={props.dispatchCart} />);
-
+  const cartCtx = useContext(CartContext);
+  const CartItemsList = cartCtx.cartItems.map((item) => <CartItem key={item.id} item={item} dispatchCart={cartCtx.dispatchCart} />);
   // Multiply the price of each cart item with its amount, then reduce(Add) the array of numbers returned from the map method.
-  let totalAmount = props.cartItems.map((item) => item.price * item.amount).reduce((total, sum) => total + sum, 0);
-
+  let totalAmount = cartCtx.cartItems.map((item) => item.price * item.amount).reduce((total, sum) => total + sum, 0);
+  //Dispatches the action to clear the cart.
   const clearCart = () => {
-    props.dispatchCart({ type: "CLEAR_CART" });
+    cartCtx.dispatchCart({ type: "CLEAR_CART" });
   };
 
   return (

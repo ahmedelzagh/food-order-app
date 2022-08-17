@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "../UI/Button";
 import Input from "../UI/Input";
 
+import CartContext from "../../store/cart-context";
+
 const MealListItemForm = (props) => {
   const [itemAmout, setItemAmount] = useState(1);
-  const { name, price, id } = props.mealDetails;
+  const cartCtx = useContext(CartContext);
 
   const updateAmountHandler = (e) => {
     setItemAmount(+e.target.value);
   };
   const addToCartHandler = (e) => {
     e.preventDefault();
-    props.onAddToCart({ name: name, price: price, id: id, amount: itemAmout });
+    cartCtx.onAddToCart({ ...props.mealDetails, amount: itemAmout });
   };
 
   return (
@@ -19,7 +21,7 @@ const MealListItemForm = (props) => {
       <Input
         label="Amount"
         input={{
-          id: "amount_" + id,
+          id: "amount_" + props.mealDetails.id,
           type: "number",
           min: "1",
           max: "5",

@@ -6,6 +6,7 @@ import MealsTeaser from "./Components/Meals/MealsTeaser";
 import Cart from "./Components/ShoppingCart/Cart";
 
 import { manageCartReducer } from "./reducers/cart-reducer";
+import CartContext from "./store/cart-context";
 
 function App() {
   // Get and convert the last item in the cart from localStorage to an array of objects.
@@ -15,13 +16,15 @@ function App() {
     return cartItemsLocal;
   });
 
-  const [showCart, setShowCart] = useState(false);
-
+  const cartWasOpen = localStorage.getItem("cartIsOpen");
+  const [showCart, setShowCart] = useState(cartWasOpen);
   const showCartHandler = () => {
     setShowCart(true);
+    localStorage.setItem("cartIsOpen", true);
   };
   const hideCartHandler = () => {
     setShowCart(false);
+    localStorage.removeItem("cartIsOpen");
   };
 
   const addToCartHandler = (mealDetails) => {
@@ -36,19 +39,23 @@ function App() {
     }
   };
 
-  // Store the cart items in the local storage.
+  // Store the cart items in the local storage after 0.3s from the last change happened in the cart.
   useEffect(() => {
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-    console.log(JSON.stringify(cartItems));
-  }, [cartItems]);
+    const cartRefreshTimer = setTimeout(() => {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    }, 300);
+    return () => {
+      clearTimeout(cartRefreshTimer);
+    };
+  }, [cartItems, showCart]);
 
   return (
-    <>
-      {showCart && <Cart onHide={hideCartHandler} cartItems={cartItems} dispatchCart={dispatchCart} />}
-      <Header onShow={showCartHandler} cartItems={cartItems} />
+    <CartContext.Provider value={{ cartItems: cartItems, dispatchCart: dispatchCart, onAddToCart: addToCartHandler }}>
+      {showCart && <Cart onHide={hideCartHandler} />}
+      <Header onShow={showCartHandler} />
       <MealsTeaser />
-      <AvailableMeals onAddToCart={addToCartHandler} />
-    </>
+      <AvailableMeals />
+    </CartContext.Provider>
   );
 }
 

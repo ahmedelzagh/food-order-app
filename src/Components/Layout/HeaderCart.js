@@ -1,10 +1,12 @@
-import React from "react";
-
-import CartIcon from "../../assets/CartIcon";
+import React, { useContext } from "react";
 import classes from "./HeaderCart.module.css";
+import CartIcon from "../../assets/CartIcon";
+
+import CartContext from "../../store/cart-context";
 
 const HeaderCart = (props) => {
-  const itemsCount = props.cartItems.length;
+  const cartCtx = useContext(CartContext);
+  const itemsCount = cartCtx.cartItems.length;
 
   return (
     <button className={classes.button} onClick={props.onClick}>
