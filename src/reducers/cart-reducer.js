@@ -1,9 +1,14 @@
 export const manageCartReducer = (state, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
-      return [...state, action.mealDetails];
-    case "REMOVE_FROM_CART":
-      return state.filter((item) => item.id !== action.id);
+      // check if the meal id is already included in the cart
+      const idsArray = state.map((item) => item.id);
+      const isIdAdded = idsArray.includes(action.mealDetails.id);
+      // If the meal is already in the cart, increase the amount by falling through to next case
+      if (!isIdAdded) {
+        return [...state, action.mealDetails];
+      }
+    // fall through
     case "INCREASE_AMOUNT":
       return state
         .map((item) => {
@@ -14,6 +19,8 @@ export const manageCartReducer = (state, action) => {
           }
         })
         .filter((item) => item.amount > 0);
+    case "REMOVE_FROM_CART":
+      return state.filter((item) => item.id !== action.id);
     case "DECREASE_AMOUNT":
       return state
         .map((item) => {

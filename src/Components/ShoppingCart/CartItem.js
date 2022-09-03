@@ -3,7 +3,7 @@ import Button from "../UI/Button";
 
 const CartItem = (props) => {
   const { name, amount, price } = props.item;
-  //Dispatches the action to increament or decrement the amount of the cart item.
+  //Dispatches the action to increment or decrement the amount of the cart item.
   const increaseAmount = () => {
     props.dispatchCart({ type: "INCREASE_AMOUNT", mealDetails: { ...props.item, amount: 1 } });
   };
