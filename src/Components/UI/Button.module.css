@@ -9,6 +9,11 @@
   font-weight: bold;
 }
 
+.button:disabled {
+  background-color: gray;
+  border-color: gray;
+}
+
 .form button:hover,
 .form button:active {
   background-color: #641e03;
