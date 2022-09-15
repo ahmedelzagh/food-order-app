@@ -1,6 +1,7 @@
 import classes from "./AvailableMeals.module.css";
 import MealListItem from "./MealListItem";
 import Card from "../UI/Card";
+import LoadingSpinner from "../UI/LoadingSpinner.js";
 import { useFetch } from "../../hooks";
 
 const AvailableMeals = () => {
@@ -9,7 +10,7 @@ const AvailableMeals = () => {
   return (
     <section className={classes.meals}>
       <Card>
-        {loading && !error && <span>Loading...</span>}
+        {loading && !error && <LoadingSpinner />}
         {!loading && error && <span>An Error Ocurred: {error}</span>}
         {!loading && !error && (
           <ul>

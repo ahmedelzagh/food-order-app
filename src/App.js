@@ -1,11 +1,11 @@
 import { useState } from "react";
-
-import Header from "./Components/Layout/Header";
-import AvailableMeals from "./Components/Meals/AvailableMeals";
-import MealsTeaser from "./Components/Meals/MealsTeaser";
-import Cart from "./Components/ShoppingCart/Cart";
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CartProvider from "./store/CartProvider";
+import Header from "./Components/Layout/Header";
+import Home from "./views/Home";
+import NotFound from "./views/NotFound";
+import Cart from "./Components/ShoppingCart/Cart";
+import Checkout from "./views/Checkout";
 
 function App() {
   const cartWasOpen = localStorage.getItem("cartIsOpen");
@@ -21,10 +21,15 @@ function App() {
 
   return (
     <CartProvider>
-      {showCart && <Cart onHide={hideCartHandler} />}
-      <Header onShow={showCartHandler} />
-      <MealsTeaser />
-      <AvailableMeals />
+      <Router>
+        {showCart && <Cart onHide={hideCartHandler} />}
+        <Header onShow={showCartHandler} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
     </CartProvider>
   );
 }
