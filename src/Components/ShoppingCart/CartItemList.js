@@ -7,15 +7,12 @@ const CartItemList = () => {
   const cartCtx = useContext(CartContext);
   const CartItemsList = cartCtx.cartItems.map((item) => <CartItem key={item.id} item={item} dispatchCart={cartCtx.dispatchCart} />);
 
-  // Multiply the price of each cart item with its amount, then reduce(Add) the array of numbers returned from the map method.
-  let totalAmount = cartCtx.cartItems.map((item) => item.price * item.amount).reduce((total, sum) => total + sum, 0);
-
   return (
     <div className={classes["cart-items"]}>
       {CartItemsList}
       <div className={classes.total}>
         <span>Total Amount</span>
-        <span>${totalAmount.toFixed(2)}</span>
+        <span>${cartCtx.totalAmount}</span>
       </div>
     </div>
   );

@@ -22,8 +22,15 @@ const CartProvider = (props) => {
     };
   }, [cartItems]);
 
+  // Multiply the price of each cart item with its amount, then reduce(Add) the array of numbers returned from the map method.
+  const calcAmount = cartItems
+    .map((item) => item.price * item.amount)
+    .reduce((total, sum) => total + sum, 0)
+    .toFixed(2);
+
   const contextValue = {
     cartItems: cartItems || [],
+    totalAmount: calcAmount,
     dispatchCart: dispatchCart,
   };
   return <CartContext.Provider value={contextValue}>{props.children}</CartContext.Provider>;

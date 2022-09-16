@@ -12,13 +12,7 @@ const AvailableMeals = () => {
       <Card>
         {loading && !error && <LoadingSpinner />}
         {!loading && error && <span>An Error Ocurred: {error}</span>}
-        {!loading && !error && (
-          <ul>
-            {meals.map((meal) => (
-              <MealListItem key={meal.id} meal={meal} />
-            ))}
-          </ul>
-        )}
+        {!loading && !error && <ul>{meals && meals.map((meal) => <MealListItem key={meal.id} meal={meal} />)}</ul>}
       </Card>
     </section>
   );

@@ -1,5 +1,11 @@
 .checkoutCard {
-    display: flex;
-    margin: auto;
-    justify-content: center;
+  max-width: 50em;
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: auto;
+}
+
+.checkoutCard button {
+  max-width: fit-content;
+  justify-self: right;
 }
